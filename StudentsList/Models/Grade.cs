@@ -10,7 +10,7 @@ namespace StudentsList.Models
         public long Id { get; set; }
         public int GradeNumber { get; set; }
         public string TeacherName { get; set; }
-
+        
         public List<Student> Students { get; set; } 
     }
 }

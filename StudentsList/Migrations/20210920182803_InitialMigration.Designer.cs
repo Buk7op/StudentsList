@@ -10,8 +10,8 @@ using StudentsList.Models;
 namespace StudentsList.Migrations
 {
     [DbContext(typeof(StudentsListContext))]
-    [Migration("20210914203641_InitialVirt2")]
-    partial class InitialVirt2
+    [Migration("20210920182803_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

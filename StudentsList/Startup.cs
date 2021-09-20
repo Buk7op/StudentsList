@@ -43,6 +43,7 @@ namespace StudentsList
             {
                 endpoints.MapDefaultControllerRoute();
             });
+            SeedData.EnsurePopulated(app);
         }
     }
 }
