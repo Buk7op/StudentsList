@@ -1,1 +1,48 @@
-﻿<h3>Список учеников.</h3>
+﻿@model Tuple<IEnumerable<Student>, IEnumerable<Grade>>
+<h3>Список всех учеников с оценками</h3>
+@foreach (var s in Model.Item1)
+{
+    <div>
+        <h4>@s.Name @s.LastName @s.SecondName</h4>
+        @foreach(var m in s.Scores)
+        {
+            <p>@m.ScoreValue</p>
+        }
+    </div>
+}
+<h3>Список учеников с оценками 4 и 5</h3>
+@foreach (var s in Model.Item1.Where(s => s.Scores.All(m => m.ScoreValue >= 4)))
+{
+    <div>
+        <h4>@s.Name @s.LastName @s.SecondName</h4>
+    </div>
+}
+<h3>Список учеников со средним баллом от 3.5 до 4.5</h3>
+@foreach (var s in Model.Item1.Where(s => s.Scores.Average(m => m.ScoreValue) > 3.5 && s.Scores.Average(m => m.ScoreValue) < 4.5))
+{
+    <div>
+        <h4>@s.Name @s.LastName @s.SecondName</h4>
+    </div>
+}
+@{ 
+    var list1 = from grade in Model.Item2
+                join student in Model.Item1 on grade.Id equals student.GradeId into StudentsInGrade
+                from student in StudentsInGrade.DefaultIfEmpty()
+                select new { grade.GradeNumber, student.Name, avg = student.Scores.Average(m => m.ScoreValue) };
+    var query = from item in list1
+                group item by new { number = item.GradeNumber } into grouped
+                select new
+                {
+                    Group = grouped.Key.number,
+                    AverageValue = grouped.Average(x => x.avg)
+                };
+    query = query.OrderByDescending(g => g.AverageValue);
+}
+<h3>Список классов, отсортированных в порядке убывания среднего бала учеников. </h3>
+@foreach(var lines in query)
+    {
+        <div>
+            <h4>Класс: @lines.Group Средний балл: @lines.AverageValue</h4>
+        </div>
+    }
+

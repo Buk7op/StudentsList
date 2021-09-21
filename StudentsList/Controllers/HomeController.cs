@@ -22,9 +22,11 @@ namespace StudentsList.Controllers
         }
         public IActionResult Index()
         {
-            var scor = _scores.GetAllScores();
-            var list = _students.GetStudentById(1).Scores;
-            return View();
+            var grades = _grades.GetAllGrades();
+            var scores = _scores.GetAllScores();
+            var listOfStudents = _students.GetAllStudents();
+        
+            return View(Tuple.Create(listOfStudents, grades));
         }
     }
 }
