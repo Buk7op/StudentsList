@@ -1,0 +1,9 @@
+﻿@model IEnumerable<Student>
+@{
+    Layout = "_LayoutTask";
+}
+<h3>Список учеников со средним баллом от 3.5 до 4.5:</h3>
+@foreach (var s in Model.Where(s => s.Scores.Average(m => m.ScoreValue) > 3.5 && s.Scores.Average(m => m.ScoreValue) < 4.5))
+{
+        <li>@s.Name @s.LastName @s.SecondName</li>
+}

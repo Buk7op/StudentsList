@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace StudentsList.Controllers
 {
+    
     public class HomeController : Controller
     {
         private readonly IStudentRepo _students;
@@ -25,8 +26,7 @@ namespace StudentsList.Controllers
             var grades = _grades.GetAllGrades();
             var scores = _scores.GetAllScores();
             var listOfStudents = _students.GetAllStudents();
-        
-            return View(Tuple.Create(listOfStudents, grades));
+            return View(listOfStudents);
         }
     }
 }
